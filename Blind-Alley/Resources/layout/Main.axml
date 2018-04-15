@@ -3,10 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/absoluteLayout1">
-    <Button AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0, 0, 1, 0.75"
+    <Button
+        LayoutFlags="All"
+        LayoutBounds="0.5, 0.5, 1, 0.75"
         android:text="^"
         android:layout_width="250px"
         android:layout_height="250px"
-        android:id="@+id/button1"
-        android:layout_y="0.5" />
+        android:id="@+id/button1" />
 </AbsoluteLayout>
