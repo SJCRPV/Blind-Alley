@@ -9,36 +9,33 @@ namespace Blind_Alley
     [Activity(Label = "Blind_Alley", MainLauncher = true)]
     public class MainActivity : Activity
     {
-        View mainView;
         Button forwardBtn;
         Button leftBtn;
         Button rightBtn;
         Button backwardBtn;
         Button interactBtn;
 
-
-        //These need to be triggered from inside an OnClick function
-        public void moveForward()
+        public void moveForward(View v)
         {
             Console.WriteLine("Forward!");
         }
 
-        public void turnLeft()
+        public void turnLeft(View v)
         {
             Console.WriteLine("Turn Left!");
         }
 
-        public void checkForInteraction()
+        public void checkForInteraction(View v)
         {
             Console.WriteLine("Wut?");
         }
 
-        public void turnRight()
+        public void turnRight(View v)
         {
             Console.WriteLine("Turn Right!");
         }
 
-        public void moveBackward()
+        public void moveBackward(View v)
         {
             Console.WriteLine("Backward!");
         }
@@ -49,7 +46,6 @@ namespace Blind_Alley
 
             // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.Main);
-            mainView = FindViewById(Resource.Layout.Main);
             forwardBtn = FindViewById<Button>(Resource.Id.buttonForward);
             leftBtn = FindViewById<Button>(Resource.Id.buttonLeft);
             rightBtn = FindViewById<Button>(Resource.Id.buttonRight);
