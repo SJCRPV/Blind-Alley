@@ -19,7 +19,7 @@
                 android:layout_column="1"
                 android:id="@+id/buttonForward"
                 android:text="Foward"
-                android:onClick="moveForward" />
+                 />
             <Space
                 android:layout_column="2"
                 android:id="@+id/space2" />
@@ -32,19 +32,19 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:id="@+id/buttonLeft"
-                android:onClick="turnLeft" />
+                 />
             <Button
                 android:text="Interact"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:id="@+id/buttonInteract"
-                android:onClick="checkForInteraction" />
+                 />
             <Button
                 android:text="Right"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:id="@+id/buttonRight"
-                android:onClick="turnRight" />
+                 />
         </TableRow>
         <TableRow
             android:layout_weight="1"
@@ -58,7 +58,7 @@
                 android:layout_height="fill_parent"
                 android:layout_column="1"
                 android:id="@+id/buttonBackward"
-                android:onClick="moveBackward" />
+                 />
             <Space
                 android:layout_column="2"
                 android:id="@+id/space4" />
