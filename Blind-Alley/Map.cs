@@ -27,9 +27,25 @@ namespace Blind_Alley
             return new int[] { rand.Next(mapWidth), rand.Next(mapHeight) };
         }
 
-        private void generateMap()
+        private void createDoor()
         {
 
+        }
+
+        private void createWall(int startIndex, int endIndex)
+        {
+
+        }
+
+        private void divideArea(int[] topLeft, int[] botRight)
+        {
+            createWall();
+            createDoor();
+        }
+
+        private void generateMap()
+        {
+            divideArea();
         }
 
         public Map(int nMapWidth, int nMapHeight)
