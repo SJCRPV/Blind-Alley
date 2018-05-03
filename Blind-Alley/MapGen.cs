@@ -48,28 +48,32 @@ namespace Blind_Alley
         }
         private int getRandomDirection()
         {
-            return rand.Next(3);
+            return rand.Next(4);
         }
 
         private bool itHasVisitedNeighbours(int[] coords)
         {
-            //TODO: Check if this has any neighbours that have been visited
-            int[] neighbours = { };
-            try
+            int[] neighbours = { new int[] { coords[0], coords[1] - 2 }, new int[] { coords[0] - 2, coords[1] }, new int[] { coords[0], coords[1] + 2 }, new int[] { coords[0] + 2, coords[1] } };
+            for (int i = 0; i < neighbours.Length; i++)
             {
-
-            }
-            catch (Exception)
-            {
-
-                throw;
+                try
+                {
+                    int[] coords = neighbours[i];
+                    if(map[coords[0], coords[1]])
+                    {
+                        return true;
+                    }
+                }
+                catch (System.IndexOutOfRangeException)
+                {
+                    continue;
+                }
             }
             return false;
         } 
 
         private void hunt()
         {
-            //TODO: Scan each row to see if there are cells that haven't been visited AND have neighbours that have. Set the hunter's coords to that when it happens and go back to walking
             bool foundPrey = false;
             for(int i = 0, j = 0; i < mapHeight && j < mapWidth; j += 2)
             {
