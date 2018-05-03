@@ -21,6 +21,7 @@ namespace Blind_Alley
         int[] hunterCoords;
         int mapWidth;
         int mapHeight;
+        bool running;
 
         private void printMap()
         {
@@ -50,16 +51,27 @@ namespace Blind_Alley
             return rand.Next(3);
         }
 
-        private bool doesItHaveVisitedNeighbours(int[] coords)
+        private bool itHasVisitedNeighbours(int[] coords)
         {
             //TODO: Check if this has any neighbours that have been visited
+            int[] neighbours = { };
+            try
+            {
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
             return false;
-        }
+        } 
 
         private void hunt()
         {
             //TODO: Scan each row to see if there are cells that haven't been visited AND have neighbours that have. Set the hunter's coords to that when it happens and go back to walking
-            for(int i = 0, j = 0; i < mapHeight && j < mapWidth; j++)
+            bool foundPrey = false;
+            for(int i = 0, j = 0; i < mapHeight && j < mapWidth; j += 2)
             {
                 if (map[i, j])
                 {
@@ -67,14 +79,24 @@ namespace Blind_Alley
                 }
                 else
                 {
-
+                    if(itHasVisitedNeighbours(map[i, j]))
+                    {
+                        hunterCoords = map[i, j];
+                        foundPrey = true;
+                        break;
+                    }
                 }
 
                 if(j == mapWidth)
                 {
-                    i++;
+                    i += 2;
                     j = 0;
                 }
+            }
+            
+            if(!foundPrey)
+            {
+                running = false;
             }
         }
 
@@ -92,7 +114,9 @@ namespace Blind_Alley
 
                     if(!hasToHunt)
                     {
+                        map[hunXCoord, hunYCoord - 1] = true;
                         map[hunXCoord, hunYCoord - 2] = true;
+                        hunterCoords[1] -= 2;
                     }
                     break;
 
@@ -102,7 +126,9 @@ namespace Blind_Alley
 
                     if(!hasToHunt)
                     {
+                        map[hunXCoord - 1, hunYCoord] = true;
                         map[hunXCoord - 2, hunYCoord] = true;
+                        hunterCoords[0] -= 2;
                     }
                     break;
 
@@ -112,7 +138,9 @@ namespace Blind_Alley
                     
                     if(!hasToHunt)
                     {
+                        map[hunXCoord, hunYCoord + 1] = true;
                         map[hunXCoord, hunYCoord + 2] = true;
+                        hunterCoords[1] += 2;
                     }
                     break;
 
@@ -122,7 +150,9 @@ namespace Blind_Alley
 
                     if(!hasToHunt)
                     {
+                        map[hunXCoord + 1, hunYCoord] = true;
                         map[hunXCoord + 2, hunYCoord] = true;
+                        hunterCoords[0] += 2;
                     }
                     break;
 
@@ -140,7 +170,7 @@ namespace Blind_Alley
 
         public bool[,] generateMap()
         {
-            bool running = true;
+            running = true;
             while (running)
             {
                 walk(hunterCoords);
