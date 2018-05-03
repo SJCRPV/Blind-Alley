@@ -15,32 +15,38 @@ namespace Blind_Alley
         Button rightBtn;
         Button backwardBtn;
         Button interactBtn;
+        Player player;
 
         private void setListeners()
         {
             forwardBtn.Click += (sender, e) =>
             {
                 Console.WriteLine("Forward!");
+                player.moveForward();
             };
 
             leftBtn.Click += (sender, e) =>
             {
                 Console.WriteLine("Turn Left!");
+                player.turnLeft();
             };
 
             interactBtn.Click += (sender, e) =>
             {
                  Console.WriteLine("Wut?");
+                player.interact();
             };
 
             rightBtn.Click += (sender, e) =>
             {
                 Console.WriteLine("Turn Right!");
+                player.turnRight();
             };
 
             backwardBtn.Click += (sender, e) =>
             {
                 Console.WriteLine("Backward!");
+                player.moveBackward();
             };
         }
 
@@ -56,6 +62,7 @@ namespace Blind_Alley
             rightBtn = mainView.FindViewById<Button>(Resource.Id.buttonRight);
             interactBtn = mainView.FindViewById<Button>(Resource.Id.buttonInteract);
             backwardBtn = mainView.FindViewById<Button>(Resource.Id.buttonBackward);
+            player = new Player();
 
             setListeners();
         }
