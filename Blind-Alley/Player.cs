@@ -25,10 +25,39 @@ namespace Blind_Alley
         private int[] playerCoords;
         private int direction;
 
+        public void interact()
+        {
+
+        }
+
+        public void turnLeft()
+        {
+            if(direction == Directions.EAST)
+            {
+                direction = Directions.NORTH;
+            }
+            else
+            {
+                direction++;
+            }
+        }
+
+        public void turnRight()
+        {
+            if (direction == Directions.WEST)
+            {
+                direction = Directions.NORTH;
+            }
+            else
+            {
+                direction--;
+            }
+        }
+
         public void move(bool forward)
         {
             int[] potentialPlayerCoords = playerCoords;
-            if(direction == Directions.NORTH && forward || direction == Directions.SOUTH && !forward)
+            if((direction == Directions.NORTH && forward) || (direction == Directions.SOUTH && !forward))
             {
                 potentialPlayerCoords[1]--;
                 if(Map.getAt(potentialPlayerCoords))
@@ -37,13 +66,44 @@ namespace Blind_Alley
                 }
                 else
                 {
-
+                    //Thud against a wall
                 }
-
             }
-            else if(direction == Directions.SOUTH && forward || direction == Directions.NORTH && !forward)
+            else if((direction == Directions.SOUTH && forward) || (direction == Directions.NORTH && !forward))
             {
-                playerCoords[1]++;
+                potentialPlayerCoords[1]++;
+                if(Map.getAt(potentialPlayerCoords))
+                {
+                    playerCoords[1]++;
+                }
+                else
+                {
+                    //Thud against a wall
+                }
+            }
+            else if((direction == Directions.WEST && forward) || (direction == Directions.EAST && !forward))
+            {
+                potentialPlayerCoords[0]--;
+                if(Map.getAt(potentialPlayerCoords))
+                {
+                    playerCoords[0]--;
+                }
+                else
+                {
+                    //Thud against a wall
+                }
+            }
+            else if((direction == Directions.EAST && forward) || (direction == Directions.WEST && !forward))
+            {
+                potentialPlayerCoords[0]++;
+                if(Map.getAt(potentialPlayerCoords))
+                {
+                    playerCoords[0]++;
+                }
+                else
+                {
+                    //Thud against a wall
+                }
             }
         }
 

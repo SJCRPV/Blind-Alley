@@ -18,27 +18,34 @@ namespace Blind_Alley
     {
         Random rand;
         bool[,] map;
+        string mapStr;
         int[] hunterCoords;
         int mapWidth;
         int mapHeight;
         bool running;
 
+        public string getMapStr()
+        {
+            return mapStr;
+        }
+
         private void printMap()
         {
+            mapStr = "";
             for(int i = 0; i < mapHeight; i++)
             {
                 for (int j = 0; j < mapWidth; j++)
                 {
                     if (map[i, j])
                     {
-                        Console.Write('.');
+                        mapStr += '.';
                     }
                     else
                     {
-                        Console.Write('=');
+                        mapStr += '=';
                     }
                 }
-                Console.WriteLine();
+                mapStr += "\n";
             }
         }
 
@@ -53,18 +60,18 @@ namespace Blind_Alley
 
         private bool itHasVisitedNeighbours(int[] coords)
         {
-            int[] neighbours = { new int[] { coords[0], coords[1] - 2 }, new int[] { coords[0] - 2, coords[1] }, new int[] { coords[0], coords[1] + 2 }, new int[] { coords[0] + 2, coords[1] } };
+            int[][] neighbours = { new int[] { coords[0], coords[1] - 2 }, new int[] { coords[0] - 2, coords[1] }, new int[] { coords[0], coords[1] + 2 }, new int[] { coords[0] + 2, coords[1] } };
             for (int i = 0; i < neighbours.Length; i++)
             {
                 try
                 {
-                    int[] coords = neighbours[i];
-                    if(map[coords[0], coords[1]])
+                    int[] mapCoords = neighbours[i];
+                    if(map[mapCoords[0], mapCoords[1]])
                     {
                         return true;
                     }
                 }
-                catch (System.IndexOutOfRangeException)
+                catch (IndexOutOfRangeException)
                 {
                     continue;
                 }
@@ -83,9 +90,9 @@ namespace Blind_Alley
                 }
                 else
                 {
-                    if(itHasVisitedNeighbours(map[i, j]))
+                    hunterCoords = new int[] { i, j };
+                    if (itHasVisitedNeighbours(hunterCoords))
                     {
-                        hunterCoords = map[i, j];
                         foundPrey = true;
                         break;
                     }
@@ -114,7 +121,7 @@ namespace Blind_Alley
             {
                 // NORTH
                 case 0:
-                    hasToHunt = (map[hunXCoord, hunYCoord - 2] || hunYCoord - 2 < 0);
+                    hasToHunt = (hunYCoord - 2 < 0 || map[hunXCoord, hunYCoord - 2]);
 
                     if(!hasToHunt)
                     {
@@ -126,7 +133,7 @@ namespace Blind_Alley
 
                 // WEST
                 case 1:
-                    hasToHunt = (map[hunXCoord - 2, hunYCoord] || hunXCoord - 2 < 0);
+                    hasToHunt = (hunXCoord - 2 < 0 || map[hunXCoord - 2, hunYCoord]);
 
                     if(!hasToHunt)
                     {
@@ -138,7 +145,7 @@ namespace Blind_Alley
 
                 // SOUTH
                 case 2:
-                    hasToHunt = (map[hunXCoord, hunYCoord + 2] || hunYCoord + 2 > mapHeight);
+                    hasToHunt = (hunYCoord + 2 > mapHeight || map[hunXCoord, hunYCoord + 2]);
                     
                     if(!hasToHunt)
                     {
@@ -150,7 +157,7 @@ namespace Blind_Alley
 
                 // EAST
                 case 3:
-                    hasToHunt = (map[hunXCoord + 2, hunYCoord] || hunXCoord + 2 > mapWidth);
+                    hasToHunt = (hunXCoord + 2 > mapWidth || map[hunXCoord + 2, hunYCoord]);
 
                     if(!hasToHunt)
                     {
@@ -179,7 +186,7 @@ namespace Blind_Alley
             {
                 walk(hunterCoords);
             }
-
+            printMap();
             return map;
         }
 
@@ -189,7 +196,8 @@ namespace Blind_Alley
             mapWidth = nMapWidth;
             mapHeight = nMapHeight;
             map = new bool[mapWidth, mapHeight];
-            int[] hunterCoords = getRandomCoord();
+            hunterCoords = getRandomCoord();
+            generateMap();
         }
     }
 }

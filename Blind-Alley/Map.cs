@@ -14,11 +14,23 @@ namespace Blind_Alley
 {
     class Map
     {
+        static bool[,] map;
         MapGen mapGen;
-        bool[,] map;
         int[] objectiveCoords;
         int[] playerCoords;
         int[] monsterCoords;
+
+        public static bool getAt(int[] coords)
+        {
+            try
+            {
+                return map[coords[0], coords[1]];
+            }
+            catch (IndexOutOfRangeException)
+            {
+                return false;
+            }
+        }
 
         public void moveMonster()
         {

@@ -16,13 +16,14 @@ namespace Blind_Alley
         Button backwardBtn;
         Button interactBtn;
         Player player;
+        TextView txtV;
 
         private void setListeners()
         {
             forwardBtn.Click += (sender, e) =>
             {
                 Console.WriteLine("Forward!");
-                player.moveForward();
+                player.move(true);
             };
 
             leftBtn.Click += (sender, e) =>
@@ -46,7 +47,7 @@ namespace Blind_Alley
             backwardBtn.Click += (sender, e) =>
             {
                 Console.WriteLine("Backward!");
-                player.moveBackward();
+                player.move(false);
             };
         }
 
@@ -55,16 +56,21 @@ namespace Blind_Alley
             base.OnCreate(savedInstanceState);
 
             // Set our view from the "main" layout resource
-            SetContentView(Resource.Layout.Main);
+            SetContentView(Resource.Layout.MapDebugging);
             mainView = Window.DecorView;
-            forwardBtn = mainView.FindViewById<Button>(Resource.Id.buttonForward);
-            leftBtn = mainView.FindViewById<Button>(Resource.Id.buttonLeft);
-            rightBtn = mainView.FindViewById<Button>(Resource.Id.buttonRight);
-            interactBtn = mainView.FindViewById<Button>(Resource.Id.buttonInteract);
-            backwardBtn = mainView.FindViewById<Button>(Resource.Id.buttonBackward);
-            player = new Player();
+            //forwardBtn = mainView.FindViewById<Button>(Resource.Id.buttonForward);
+            //leftBtn = mainView.FindViewById<Button>(Resource.Id.buttonLeft);
+            //rightBtn = mainView.FindViewById<Button>(Resource.Id.buttonRight);
+            //interactBtn = mainView.FindViewById<Button>(Resource.Id.buttonInteract);
+            //backwardBtn = mainView.FindViewById<Button>(Resource.Id.buttonBackward);
+            //player = new Player();
 
-            setListeners();
+            //setListeners();
+
+            // Testing map generation
+            MapGen mapGen = new MapGen(20, 20);
+            txtV = FindViewById<TextView>(Resource.Id.textView1);
+            txtV.Text = mapGen.getMapStr();
         }
     }
 }
