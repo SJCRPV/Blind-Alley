@@ -82,26 +82,28 @@ namespace Blind_Alley
         private void hunt()
         {
             bool foundPrey = false;
-            for(int i = 0, j = 0; i < mapHeight && j < mapWidth; j += 2)
+            for(int i = 0; i < mapHeight; i += 2)
             {
-                if (map[i, j])
+                for(int j = 0; j < mapHeight; j += 2)
                 {
-                    continue;
-                }
-                else
-                {
-                    hunterCoords = new int[] { i, j };
-                    if (itHasVisitedNeighbours(hunterCoords))
+                    if (map[i, j])
                     {
-                        foundPrey = true;
-                        break;
+                        continue;
+                    }
+                    else
+                    {
+                        hunterCoords = new int[] { i, j };
+                        if(itHasVisitedNeighbours(hunterCoords))
+                        {
+                            foundPrey = true;
+                            break;
+                        }
                     }
                 }
 
-                if(j == mapWidth)
+                if(foundPrey)
                 {
-                    i += 2;
-                    j = 0;
+                    break;
                 }
             }
             
