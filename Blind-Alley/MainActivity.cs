@@ -71,6 +71,7 @@ namespace Blind_Alley
             MapGen mapGen = new MapGen(20, 20);
             txtV = FindViewById<TextView>(Resource.Id.textView1);
             txtV.Text = mapGen.getMapStr();
+            Console.WriteLine(txtV.Text);
         }
     }
 }

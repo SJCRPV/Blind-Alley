@@ -22,7 +22,7 @@ namespace Blind_Alley
         int[] hunterCoords;
         int mapWidth;
         int mapHeight;
-        bool running;
+        bool notDone;
 
         public string getMapStr()
         {
@@ -53,21 +53,64 @@ namespace Blind_Alley
         {
             return new int[] { rand.Next(mapWidth), rand.Next(mapHeight) };
         }
-        private int getRandomDirection()
+
+        private int[][] getNeighbours(int[] coords)
         {
-            return rand.Next(4);
+            return new int[][] { new int[] { coords[0], coords[1] - 2 }, new int[] { coords[0] - 2, coords[1] }, new int[] { coords[0], coords[1] + 2 }, new int[] { coords[0] + 2, coords[1] } };
+        }
+
+        private int? getRandomDirection()
+        {
+            int[][] neighbours = getNeighbours(hunterCoords);
+            List<int> possibleDirections = new List<int>();
+            for(int i = 0; i < neighbours.Length; i++)
+            {
+                try
+                {
+                    int[] neighbour = neighbours[i];
+                    if(!map[neighbour[0], neighbour[1]])
+                    {
+                        possibleDirections.Add(i);
+                    }
+                }
+                catch (IndexOutOfRangeException){}
+            }
+
+            if(possibleDirections.Count() == 0)
+            {
+                return null;
+            }
+            return possibleDirections[rand.Next(possibleDirections.Count())];
+        }
+
+        private void carvePassage(int[] startingCoords, int[] endCoords)
+        {
+            for (int x = startingCoords[0], y = startingCoords[1]; x != endCoords[0] || y != endCoords[1];)
+            {
+                map[x, y] = true;
+
+                if(x != endCoords[0])
+                {
+                    x = x < endCoords[0] ? ++x : --x;
+                }
+                if(y != endCoords[1])
+                {
+                    y = y < endCoords[1] ? ++y : --y;
+                }
+            }
         }
 
         private bool itHasVisitedNeighbours(int[] coords)
         {
-            int[][] neighbours = { new int[] { coords[0], coords[1] - 2 }, new int[] { coords[0] - 2, coords[1] }, new int[] { coords[0], coords[1] + 2 }, new int[] { coords[0] + 2, coords[1] } };
+            int[][] neighbours = getNeighbours(coords);
             for (int i = 0; i < neighbours.Length; i++)
             {
                 try
                 {
-                    int[] mapCoords = neighbours[i];
-                    if(map[mapCoords[0], mapCoords[1]])
+                    int[] neighbour = neighbours[i];
+                    if (map[neighbour[0], neighbour[1]])
                     {
+                        carvePassage(coords, neighbours[i]);
                         return true;
                     }
                 }
@@ -81,10 +124,9 @@ namespace Blind_Alley
 
         private void hunt()
         {
-            bool foundPrey = false;
             for(int i = 0; i < mapHeight; i += 2)
             {
-                for(int j = 0; j < mapHeight; j += 2)
+                for(int j = 0; j < mapWidth; j += 2)
                 {
                     if (map[i, j])
                     {
@@ -92,41 +134,43 @@ namespace Blind_Alley
                     }
                     else
                     {
-                        hunterCoords = new int[] { i, j };
-                        if(itHasVisitedNeighbours(hunterCoords))
+                        int[] potentialCoords = new int[] { i, j };
+                        if(itHasVisitedNeighbours(potentialCoords))
                         {
-                            foundPrey = true;
-                            break;
+                            hunterCoords = potentialCoords;
+                            return;
                         }
                     }
                 }
-
-                if(foundPrey)
-                {
-                    break;
-                }
             }
             
-            if(!foundPrey)
-            {
-                running = false;
-            }
+            notDone = false;
         }
 
-        private void walk(int[] startCoords)
+        private void walk()
         {
-            int direction = getRandomDirection();
             int hunXCoord = hunterCoords[0];
             int hunYCoord = hunterCoords[1];
+            int? direction = getRandomDirection();
             bool hasToHunt = false;
             switch (direction)
             {
                 // NORTH
                 case 0:
-                    hasToHunt = (hunYCoord - 2 < 0 || map[hunXCoord, hunYCoord - 2]);
+                    try
+                    {
+                        //You need to change this condition. hasToHunt should only be true when hunter literally has nowhere to go (taken care of in the getRandomDirection()).
+                        hasToHunt = (hunYCoord - 2 < 0 || map[hunXCoord, hunYCoord - 2]);
+                    }
+                    catch(IndexOutOfRangeException)
+                    {
+                        walk();
+                    }
 
                     if(!hasToHunt)
                     {
+                        Console.WriteLine("Look in " + hunXCoord + ", " + hunYCoord + " going North");
+                        map[hunXCoord, hunYCoord] = true;
                         map[hunXCoord, hunYCoord - 1] = true;
                         map[hunXCoord, hunYCoord - 2] = true;
                         hunterCoords[1] -= 2;
@@ -135,10 +179,19 @@ namespace Blind_Alley
 
                 // WEST
                 case 1:
-                    hasToHunt = (hunXCoord - 2 < 0 || map[hunXCoord - 2, hunYCoord]);
-
-                    if(!hasToHunt)
+                    try
                     {
+                        hasToHunt = (hunXCoord - 2 < 0 || map[hunXCoord - 2, hunYCoord]);
+                    }
+                    catch (IndexOutOfRangeException)
+                    {
+                        walk();
+                    }
+
+                    if (!hasToHunt)
+                    {
+                        Console.WriteLine("Look in " + hunXCoord + ", " + hunYCoord + " going West");
+                        map[hunXCoord, hunYCoord] = true;
                         map[hunXCoord - 1, hunYCoord] = true;
                         map[hunXCoord - 2, hunYCoord] = true;
                         hunterCoords[0] -= 2;
@@ -147,10 +200,19 @@ namespace Blind_Alley
 
                 // SOUTH
                 case 2:
-                    hasToHunt = (hunYCoord + 2 > mapHeight || map[hunXCoord, hunYCoord + 2]);
-                    
-                    if(!hasToHunt)
+                    try
                     {
+                        hasToHunt = (hunYCoord + 2 >= mapHeight || map[hunXCoord, hunYCoord + 2]);                    
+                    }
+                    catch (IndexOutOfRangeException)
+                    {
+                        walk();
+                    }
+
+                    if (!hasToHunt)
+                    {
+                        Console.WriteLine("Look in " + hunXCoord + ", " + hunYCoord + " going South");
+                        map[hunXCoord, hunYCoord] = true;
                         map[hunXCoord, hunYCoord + 1] = true;
                         map[hunXCoord, hunYCoord + 2] = true;
                         hunterCoords[1] += 2;
@@ -159,10 +221,19 @@ namespace Blind_Alley
 
                 // EAST
                 case 3:
-                    hasToHunt = (hunXCoord + 2 > mapWidth || map[hunXCoord + 2, hunYCoord]);
-
-                    if(!hasToHunt)
+                    try
                     {
+                        hasToHunt = (hunXCoord + 2 >= mapWidth || map[hunXCoord + 2, hunYCoord]);
+                    }
+                    catch (IndexOutOfRangeException)
+                    {
+                        walk();
+                    }
+
+                    if (!hasToHunt)
+                    {
+                        Console.WriteLine("Look in " + hunXCoord + ", " + hunYCoord + " going East");
+                        map[hunXCoord, hunYCoord] = true;
                         map[hunXCoord + 1, hunYCoord] = true;
                         map[hunXCoord + 2, hunYCoord] = true;
                         hunterCoords[0] += 2;
@@ -183,10 +254,10 @@ namespace Blind_Alley
 
         public bool[,] generateMap()
         {
-            running = true;
-            while (running)
+            notDone = true;
+            while (notDone)
             {
-                walk(hunterCoords);
+                walk();
             }
             printMap();
             return map;
