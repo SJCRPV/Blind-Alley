@@ -152,103 +152,56 @@ namespace Blind_Alley
             int hunXCoord = hunterCoords[0];
             int hunYCoord = hunterCoords[1];
             int? direction = getRandomDirection();
-            bool hasToHunt = false;
-            switch (direction)
+            if(direction == null)
             {
-                // NORTH
-                case 0:
-                    try
-                    {
-                        //You need to change this condition. hasToHunt should only be true when hunter literally has nowhere to go (taken care of in the getRandomDirection()).
-                        hasToHunt = (hunYCoord - 2 < 0 || map[hunXCoord, hunYCoord - 2]);
-                    }
-                    catch(IndexOutOfRangeException)
-                    {
-                        walk();
-                    }
-
-                    if(!hasToHunt)
-                    {
+                hunt();
+                return;
+            }
+            else
+            {
+                switch (direction)
+                {
+                    // NORTH
+                    case 0:
                         Console.WriteLine("Look in " + hunXCoord + ", " + hunYCoord + " going North");
                         map[hunXCoord, hunYCoord] = true;
                         map[hunXCoord, hunYCoord - 1] = true;
                         map[hunXCoord, hunYCoord - 2] = true;
                         hunterCoords[1] -= 2;
-                    }
-                    break;
+                        break;
 
-                // WEST
-                case 1:
-                    try
-                    {
-                        hasToHunt = (hunXCoord - 2 < 0 || map[hunXCoord - 2, hunYCoord]);
-                    }
-                    catch (IndexOutOfRangeException)
-                    {
-                        walk();
-                    }
-
-                    if (!hasToHunt)
-                    {
+                    // WEST
+                    case 1:
                         Console.WriteLine("Look in " + hunXCoord + ", " + hunYCoord + " going West");
                         map[hunXCoord, hunYCoord] = true;
                         map[hunXCoord - 1, hunYCoord] = true;
                         map[hunXCoord - 2, hunYCoord] = true;
                         hunterCoords[0] -= 2;
-                    }
-                    break;
+                        break;
 
-                // SOUTH
-                case 2:
-                    try
-                    {
-                        hasToHunt = (hunYCoord + 2 >= mapHeight || map[hunXCoord, hunYCoord + 2]);                    
-                    }
-                    catch (IndexOutOfRangeException)
-                    {
-                        walk();
-                    }
-
-                    if (!hasToHunt)
-                    {
+                    // SOUTH
+                    case 2:
                         Console.WriteLine("Look in " + hunXCoord + ", " + hunYCoord + " going South");
                         map[hunXCoord, hunYCoord] = true;
                         map[hunXCoord, hunYCoord + 1] = true;
                         map[hunXCoord, hunYCoord + 2] = true;
                         hunterCoords[1] += 2;
-                    }
-                    break;
+                        break;
 
-                // EAST
-                case 3:
-                    try
-                    {
-                        hasToHunt = (hunXCoord + 2 >= mapWidth || map[hunXCoord + 2, hunYCoord]);
-                    }
-                    catch (IndexOutOfRangeException)
-                    {
-                        walk();
-                    }
-
-                    if (!hasToHunt)
-                    {
+                    // EAST
+                    case 3:
                         Console.WriteLine("Look in " + hunXCoord + ", " + hunYCoord + " going East");
                         map[hunXCoord, hunYCoord] = true;
                         map[hunXCoord + 1, hunYCoord] = true;
                         map[hunXCoord + 2, hunYCoord] = true;
                         hunterCoords[0] += 2;
-                    }
-                    break;
+                        break;
 
-                // ERROR
-                default:
-                    Console.WriteLine("ERROR: I got the value " + direction + " and I don't know what to do with it.");
-                    break;
-            }
-
-            if (hasToHunt)
-            {
-                hunt();
+                    // ERROR
+                    default:
+                        Console.WriteLine("ERROR: I got the value " + direction + " and I don't know what to do with it.");
+                        break;
+                }
             }
         }
 
