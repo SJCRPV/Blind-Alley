@@ -17,7 +17,6 @@ namespace Blind_Alley
         static bool[,] map;
         MapGen mapGen;
         int[] objectiveCoords;
-        int[] playerCoords;
         int[] monsterCoords;
 
         public static bool getAt(int[] coords)
@@ -41,7 +40,7 @@ namespace Blind_Alley
         {
             mapGen = new MapGen(nMapWidth, nMapHeight);
             map = mapGen.generateMap();
-            playerCoords = new int[] { 0, 0 };
+            mapGen.placeRelevantPieces();
             objectiveCoords = mapGen.getRandomCoord();
             monsterCoords = (int[])objectiveCoords.Clone();
         }

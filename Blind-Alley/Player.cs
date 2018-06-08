@@ -25,6 +25,11 @@ namespace Blind_Alley
         private int[] playerCoords;
         private int direction;
 
+        public int[] PlayerCoords
+        {
+            get => playerCoords;
+        }
+
         public void interact()
         {
 
@@ -32,31 +37,25 @@ namespace Blind_Alley
 
         public void turnLeft()
         {
-            if(direction == Directions.EAST)
+            direction++;
+            if(direction > Directions.EAST)
             {
                 direction = Directions.NORTH;
-            }
-            else
-            {
-                direction++;
             }
         }
 
         public void turnRight()
         {
-            if (direction == Directions.WEST)
+            direction--;
+            if (direction < Directions.NORTH)
             {
-                direction = Directions.NORTH;
-            }
-            else
-            {
-                direction--;
+                direction = Directions.EAST;
             }
         }
 
         public void move(bool forward)
         {
-            int[] potentialPlayerCoords = playerCoords;
+            int[] potentialPlayerCoords = (int[])playerCoords.Clone();
             if((direction == Directions.NORTH && forward) || (direction == Directions.SOUTH && !forward))
             {
                 potentialPlayerCoords[1]--;
@@ -67,6 +66,7 @@ namespace Blind_Alley
                 else
                 {
                     //Thud against a wall
+                    Console.WriteLine("Thud");
                 }
             }
             else if((direction == Directions.SOUTH && forward) || (direction == Directions.NORTH && !forward))
@@ -79,6 +79,7 @@ namespace Blind_Alley
                 else
                 {
                     //Thud against a wall
+                    Console.WriteLine("Thud");
                 }
             }
             else if((direction == Directions.WEST && forward) || (direction == Directions.EAST && !forward))
@@ -91,6 +92,7 @@ namespace Blind_Alley
                 else
                 {
                     //Thud against a wall
+                    Console.WriteLine("Thud");
                 }
             }
             else if((direction == Directions.EAST && forward) || (direction == Directions.WEST && !forward))
@@ -103,13 +105,15 @@ namespace Blind_Alley
                 else
                 {
                     //Thud against a wall
+                    Console.WriteLine("Thud");
                 }
             }
         }
 
-        public Player()
+        public Player(int xStart, int yStart)
         {
-            playerCoords = new int[] { 0, 0 };
+            playerCoords = new int[] { xStart, yStart };
+            direction = Directions.SOUTH;
         }
     }
 }

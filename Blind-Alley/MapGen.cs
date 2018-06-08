@@ -205,6 +205,11 @@ namespace Blind_Alley
             }
         }
 
+        public void placeRelevantPieces()
+        {
+
+        }
+
         public bool[,] generateMap()
         {
             notDone = true;
@@ -223,7 +228,6 @@ namespace Blind_Alley
             mapHeight = nMapHeight;
             map = new bool[mapWidth, mapHeight];
             hunterCoords = getRandomCoord();
-            generateMap();
         }
     }
 }
