@@ -17,6 +17,7 @@ namespace Blind_Alley
         Button interactBtn;
         Player player;
         Map map;
+        TextView txtV;
 
         private void setListeners()
         {
@@ -61,25 +62,24 @@ namespace Blind_Alley
             base.OnCreate(savedInstanceState);
 
             // Set our view from the "main" layout resource
-            SetContentView(Resource.Layout.Main);
-            mainView = Window.DecorView;
-            forwardBtn = mainView.FindViewById<Button>(Resource.Id.buttonForward);
-            leftBtn = mainView.FindViewById<Button>(Resource.Id.buttonLeft);
-            rightBtn = mainView.FindViewById<Button>(Resource.Id.buttonRight);
-            interactBtn = mainView.FindViewById<Button>(Resource.Id.buttonInteract);
-            backwardBtn = mainView.FindViewById<Button>(Resource.Id.buttonBackward);
+            //SetContentView(Resource.Layout.Main);
+            //mainView = Window.DecorView;
+            //forwardBtn = mainView.FindViewById<Button>(Resource.Id.buttonForward);
+            //leftBtn = mainView.FindViewById<Button>(Resource.Id.buttonLeft);
+            //rightBtn = mainView.FindViewById<Button>(Resource.Id.buttonRight);
+            //interactBtn = mainView.FindViewById<Button>(Resource.Id.buttonInteract);
+            //backwardBtn = mainView.FindViewById<Button>(Resource.Id.buttonBackward);
             player = new Player(0, 0);
 
-            setListeners();
-            generateMap();
-
-            Console.Write("At 0,0 the map is " + Map.getAt(player.PlayerCoords));
+            //setListeners();
+            //generateMap();
 
             // Testing map generation
-            //MapGen mapGen = new MapGen(44, 44);
-            //txtV = FindViewById<TextView>(Resource.Id.textView1);
-            //txtV.Text = mapGen.getMapStr();
-            //Console.WriteLine(txtV.Text);
+            SetContentView(Resource.Layout.MapDebugging);
+            Map map = new Map(25, 25);
+            txtV = FindViewById<TextView>(Resource.Id.textView1);
+            txtV.Text = MapGen.getMapStr();
+            Console.WriteLine(txtV.Text);
         }
     }
 }

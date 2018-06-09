@@ -17,19 +17,20 @@ namespace Blind_Alley
     class MapGen
     {
         Random rand;
-        bool[,] map;
-        string mapStr;
+        static bool[,] map;
+        static string mapStr;
+        static int mapWidth;
+        static int mapHeight;
         int[] hunterCoords;
-        int mapWidth;
-        int mapHeight;
         bool notDone;
 
-        public string getMapStr()
+        public static string getMapStr()
         {
+            printMap();
             return mapStr;
         }
 
-        private void printMap()
+        private static void printMap()
         {
             mapStr = "";
             for(int i = 0; i < mapHeight; i++)
@@ -203,11 +204,6 @@ namespace Blind_Alley
                         break;
                 }
             }
-        }
-
-        public void placeRelevantPieces()
-        {
-
         }
 
         public bool[,] generateMap()

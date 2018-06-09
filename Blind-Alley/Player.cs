@@ -22,10 +22,10 @@ namespace Blind_Alley
 
     class Player
     {
-        private int[] playerCoords;
+        private static int[] playerCoords;
         private int direction;
 
-        public int[] PlayerCoords
+        public static int[] PlayerCoords
         {
             get => playerCoords;
         }

@@ -15,6 +15,7 @@ namespace Blind_Alley
     class Map
     {
         static bool[,] map;
+        static float minDistanceToPlayer;
         MapGen mapGen;
         int[] objectiveCoords;
         int[] monsterCoords;
@@ -36,13 +37,27 @@ namespace Blind_Alley
 
         }
 
+        private bool farEnoughFromPlayer(int[] coords)
+        {
+            return Math.Abs(Player.PlayerCoords[0] - coords[0]) + Math.Abs(Player.PlayerCoords[1] - coords[1]) > minDistanceToPlayer;
+        }
+
+        public void placeRelevantPieces()
+        {
+            while(!farEnoughFromPlayer(objectiveCoords))
+            {
+                objectiveCoords = mapGen.getRandomCoord();
+            }
+        }
+
         public Map(int nMapWidth, int nMapHeight)
         {
             mapGen = new MapGen(nMapWidth, nMapHeight);
             map = mapGen.generateMap();
-            mapGen.placeRelevantPieces();
             objectiveCoords = mapGen.getRandomCoord();
             monsterCoords = (int[])objectiveCoords.Clone();
+            placeRelevantPieces();
+            minDistanceToPlayer = (nMapWidth / 2) + (nMapHeight / 2);
         }
     }
 }
