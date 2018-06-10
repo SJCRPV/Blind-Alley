@@ -78,7 +78,7 @@ namespace Blind_Alley
             SetContentView(Resource.Layout.MapDebugging);
             Map map = new Map(25, 25);
             txtV = FindViewById<TextView>(Resource.Id.textView1);
-            txtV.Text = MapGen.getMapStr();
+            txtV.Text = map.getMapStr();
             Console.WriteLine(txtV.Text);
         }
     }

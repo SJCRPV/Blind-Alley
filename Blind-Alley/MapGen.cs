@@ -24,32 +24,6 @@ namespace Blind_Alley
         int[] hunterCoords;
         bool notDone;
 
-        public static string getMapStr()
-        {
-            printMap();
-            return mapStr;
-        }
-
-        private static void printMap()
-        {
-            mapStr = "";
-            for(int i = 0; i < mapHeight; i++)
-            {
-                for (int j = 0; j < mapWidth; j++)
-                {
-                    if (map[i, j])
-                    {
-                        mapStr += '.';
-                    }
-                    else
-                    {
-                        mapStr += '=';
-                    }
-                }
-                mapStr += "\n";
-            }
-        }
-
         public int[] getRandomCoord()
         {
             return new int[] { rand.Next(mapWidth), rand.Next(mapHeight) };
@@ -213,7 +187,6 @@ namespace Blind_Alley
             {
                 walk();
             }
-            printMap();
             return map;
         }
 
