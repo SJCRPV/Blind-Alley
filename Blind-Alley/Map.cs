@@ -30,6 +30,7 @@ namespace Blind_Alley
             {
                 for (int j = 0; j < mapWidth; j++)
                 {
+                    // ERROR: If the objective is placed in an enclosed position, it'll throw an error here because monsterCoords will be at null.
                     if(i == monsterCoords[0] && j == monsterCoords[1])
                     {
                         mapStr += 'M';
