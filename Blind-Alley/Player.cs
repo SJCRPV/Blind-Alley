@@ -59,7 +59,7 @@ namespace Blind_Alley
             if((direction == Directions.NORTH && forward) || (direction == Directions.SOUTH && !forward))
             {
                 potentialPlayerCoords[1]--;
-                if(Map.getAt(potentialPlayerCoords))
+                if(MapHandler.getAt(potentialPlayerCoords))
                 {
                     playerCoords[1]--;
                 }
@@ -72,7 +72,7 @@ namespace Blind_Alley
             else if((direction == Directions.SOUTH && forward) || (direction == Directions.NORTH && !forward))
             {
                 potentialPlayerCoords[1]++;
-                if(Map.getAt(potentialPlayerCoords))
+                if(MapHandler.getAt(potentialPlayerCoords))
                 {
                     playerCoords[1]++;
                 }
@@ -85,7 +85,7 @@ namespace Blind_Alley
             else if((direction == Directions.WEST && forward) || (direction == Directions.EAST && !forward))
             {
                 potentialPlayerCoords[0]--;
-                if(Map.getAt(potentialPlayerCoords))
+                if(MapHandler.getAt(potentialPlayerCoords))
                 {
                     playerCoords[0]--;
                 }
@@ -98,7 +98,7 @@ namespace Blind_Alley
             else if((direction == Directions.EAST && forward) || (direction == Directions.WEST && !forward))
             {
                 potentialPlayerCoords[0]++;
-                if(Map.getAt(potentialPlayerCoords))
+                if(MapHandler.getAt(potentialPlayerCoords))
                 {
                     playerCoords[0]++;
                 }

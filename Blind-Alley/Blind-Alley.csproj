@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Map.cs" />
+    <Compile Include="MapHandler.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="MapGen.cs" />
     <Compile Include="Monster.cs" />

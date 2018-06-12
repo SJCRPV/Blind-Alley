@@ -14,49 +14,10 @@ namespace Blind_Alley
 {
     // Maze Generator - Hunter-Kill - http://weblog.jamisbuck.org/2011/1/24/maze-generation-hunt-and-kill-algorithm
 
-    class MapGen
+    class MapGen : Map
     {
-        Random rand;
-        static bool[,] map;
-        static string mapStr;
-        static int mapWidth;
-        static int mapHeight;
         int[] hunterCoords;
         bool notDone;
-
-        public int[] getRandomCoord()
-        {
-            return new int[] { rand.Next(mapWidth), rand.Next(mapHeight) };
-        }
-
-        private int[][] getNeighbours(int[] coords)
-        {
-            return new int[][] { new int[] { coords[0], coords[1] - 2 }, new int[] { coords[0] - 2, coords[1] }, new int[] { coords[0], coords[1] + 2 }, new int[] { coords[0] + 2, coords[1] } };
-        }
-
-        private int? getRandomDirection()
-        {
-            int[][] neighbours = getNeighbours(hunterCoords);
-            List<int> possibleDirections = new List<int>();
-            for(int i = 0; i < neighbours.Length; i++)
-            {
-                try
-                {
-                    int[] neighbour = neighbours[i];
-                    if(!map[neighbour[0], neighbour[1]])
-                    {
-                        possibleDirections.Add(i);
-                    }
-                }
-                catch (IndexOutOfRangeException){}
-            }
-
-            if(possibleDirections.Count() == 0)
-            {
-                return null;
-            }
-            return possibleDirections[rand.Next(possibleDirections.Count())];
-        }
 
         private void carvePassage(int[] startingCoords, int[] endCoords)
         {
@@ -126,7 +87,7 @@ namespace Blind_Alley
         {
             int hunXCoord = hunterCoords[0];
             int hunYCoord = hunterCoords[1];
-            int? direction = getRandomDirection();
+            int? direction = getRandomDirection(hunterCoords);
             if(direction == null)
             {
                 hunt();
@@ -190,11 +151,9 @@ namespace Blind_Alley
             return map;
         }
 
-        public MapGen(int nMapWidth, int nMapHeight)
+        public MapGen()
         {
             rand = new Random();
-            mapWidth = nMapWidth;
-            mapHeight = nMapHeight;
             map = new bool[mapWidth, mapHeight];
             hunterCoords = getRandomCoord();
         }

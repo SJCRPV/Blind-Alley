@@ -12,51 +12,12 @@ using Android.Widget;
 
 namespace Blind_Alley
 {
-    class Map
+    abstract class Map
     {
-        static bool[,] map;
-        static int mapHeight;
-        static int mapWidth;
-        static float minDistanceToPlayer;
-        static string mapStr;
-        MapGen mapGen;
-        int[] objectiveCoords;
-        int[] monsterCoords;
-
-        private void printMap()
-        {
-            mapStr = "";
-            for (int i = 0; i < mapHeight; i++)
-            {
-                for (int j = 0; j < mapWidth; j++)
-                {
-                    // ERROR: If the objective is placed in an enclosed position, it'll throw an error here because monsterCoords will be at null.
-                    if(i == monsterCoords[0] && j == monsterCoords[1])
-                    {
-                        mapStr += 'M';
-                    }
-                    else if(i == objectiveCoords[0] && j == objectiveCoords[1])
-                    {
-                        mapStr += 'O';
-                    }
-                    else if (map[i, j])
-                    {
-                        mapStr += '.';
-                    }
-                    else
-                    {
-                        mapStr += '=';
-                    }
-                }
-                mapStr += "\n";
-            }
-        }
-
-        public string getMapStr()
-        {
-            printMap();
-            return mapStr;
-        }
+        protected Random rand;
+        protected static bool[,] map;
+        protected static int mapHeight;
+        protected static int mapWidth;
 
         public static bool getAt(int[] coords)
         {
@@ -70,73 +31,39 @@ namespace Blind_Alley
             }
         }
 
-        public void moveMonster()
+        public int[] getRandomCoord()
         {
-
+            return new int[] { rand.Next(mapWidth), rand.Next(mapHeight) };
         }
 
-        private int[] placeNearObjective()
+        protected int[][] getNeighbours(int[] coords)
         {
-            try
-            {
-                int[] retCoords;
-                int x = objectiveCoords[0];
-                int y = objectiveCoords[1];
+            return new int[][] { new int[] { coords[0], coords[1] - 2 }, new int[] { coords[0] - 2, coords[1] }, new int[] { coords[0], coords[1] + 2 }, new int[] { coords[0] + 2, coords[1] } };
+        }
 
-                if(map[x + 1, y])
-                {
-                    retCoords = new int[] { x + 1, y };
-                }
-                else if(map[x - 1, y])
-                {
-                    retCoords = new int[] { x - 1, y };
-                }
-                else if(map[x, y + 1])
-                {
-                    retCoords = new int[] { x, y + 1 };
-                }
-                else if(map[x, y - 1])
-                {
-                    retCoords = new int[] { x, y - 1 };
-                }
-                else
-                {
-                    throw new Exception("The objective is blocked by walls on all sides. Something is wrong");
-                }
-                return retCoords;
-            }
-            catch (Exception e)
+        protected int? getRandomDirection(int[] coords)
+        {
+            int[][] neighbours = getNeighbours(coords);
+            List<int> possibleDirections = new List<int>();
+            for (int i = 0; i < neighbours.Length; i++)
             {
-                Console.WriteLine(e);
+                try
+                {
+                    int[] neighbour = neighbours[i];
+                    if (!map[neighbour[0], neighbour[1]])
+                    {
+                        possibleDirections.Add(i);
+                    }
+                }
+                catch (IndexOutOfRangeException) { }
+            }
+
+            if (possibleDirections.Count() == 0)
+            {
                 return null;
             }
-
+            return possibleDirections[rand.Next(possibleDirections.Count())];
         }
 
-        private bool farEnoughFromPlayer(int[] coords)
-        {
-            return Math.Abs(Player.PlayerCoords[0] - coords[0]) + Math.Abs(Player.PlayerCoords[1] - coords[1]) > minDistanceToPlayer;
-        }
-
-        public void placeRelevantPieces()
-        {
-            objectiveCoords = mapGen.getRandomCoord();
-            while (!farEnoughFromPlayer(objectiveCoords))
-            {
-                objectiveCoords = mapGen.getRandomCoord();
-            }
-            monsterCoords = placeNearObjective();
-        }
-
-        public Map(int nMapWidth, int nMapHeight)
-        {
-            mapGen = new MapGen(nMapWidth, nMapHeight);
-            mapWidth = nMapWidth;
-            mapHeight = nMapHeight;
-            minDistanceToPlayer = (nMapWidth / 2) + (nMapHeight / 2);
-
-            map = mapGen.generateMap();
-            placeRelevantPieces();
-        }
     }
 }

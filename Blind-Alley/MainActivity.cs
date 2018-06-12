@@ -16,7 +16,7 @@ namespace Blind_Alley
         Button backwardBtn;
         Button interactBtn;
         Player player;
-        Map map;
+        MapHandler map;
         TextView txtV;
 
         private void setListeners()
@@ -54,7 +54,7 @@ namespace Blind_Alley
 
         private void generateMap()
         {
-            map = new Map(25, 25);
+            map = new MapHandler(25, 25);
         }
 
         protected override void OnCreate(Bundle savedInstanceState)
@@ -76,7 +76,7 @@ namespace Blind_Alley
 
             // Testing map generation
             SetContentView(Resource.Layout.MapDebugging);
-            Map map = new Map(25, 25);
+            MapHandler map = new MapHandler(25, 25);
             txtV = FindViewById<TextView>(Resource.Id.textView1);
             txtV.Text = map.getMapStr();
             Console.WriteLine(txtV.Text);
