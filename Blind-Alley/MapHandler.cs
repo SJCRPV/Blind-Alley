@@ -54,14 +54,52 @@ namespace Blind_Alley
             return mapStr;
         }
 
+        private void walk()
+        {
+            int? direction = getRandomDirection(monsterCoords, true);
+
+            switch (direction)
+            {
+                // NORTH
+                case 0:
+                    Console.WriteLine("Moving North");
+                    monsterCoords[1] -= 1;
+                    break;
+
+                // WEST
+                case 1:
+                    Console.WriteLine("Moving West");
+                    monsterCoords[0] -= 1;
+                    break;
+
+                // SOUTH
+                case 2:
+                    Console.WriteLine("Moving South");
+                    monsterCoords[1] += 1;
+                    break;
+
+                // EAST
+                case 3:
+                    Console.WriteLine("Moving East");
+                    monsterCoords[0] += 1;
+                    break;
+
+                // ERROR
+                default:
+                    Console.WriteLine("ERROR: I got the value " + direction + " and I don't know what to do with it.");
+                    break;
+            }
+        }
+
         public void moveMonster()
         {
             TimeSpan startTime = TimeSpan.Zero;
-            TimeSpan delayBetweenMovement = TimeSpan.FromSeconds(3);
+            TimeSpan delayBetweenMovement = TimeSpan.FromSeconds(1);
 
             Timer timer = new Timer((e) =>
             {
-                // What do you want to do every 3 seconds?
+                walk();
+                Console.WriteLine("X: " + monsterCoords[0] + " Y: " + monsterCoords[1]);
             }, null, startTime, delayBetweenMovement);
         }
 
@@ -119,6 +157,7 @@ namespace Blind_Alley
 
         public MapHandler(int nMapWidth, int nMapHeight)
         {
+            rand = new Random();
             mapWidth = nMapWidth;
             mapHeight = nMapHeight;
             mapGen = new MapGen();

@@ -36,21 +36,30 @@ namespace Blind_Alley
             return new int[] { rand.Next(mapWidth), rand.Next(mapHeight) };
         }
 
-        protected int[][] getNeighbours(int[] coords)
+        protected int[][] getNeighbours(int[] coords, bool wantClosest)
         {
-            return new int[][] { new int[] { coords[0], coords[1] - 2 }, new int[] { coords[0] - 2, coords[1] }, new int[] { coords[0], coords[1] + 2 }, new int[] { coords[0] + 2, coords[1] } };
+            int distance = wantClosest ? 1 : 2;
+            return new int[][] { new int[] { coords[0], coords[1] - distance }, new int[] { coords[0] - distance, coords[1] }, new int[] { coords[0], coords[1] + distance }, new int[] { coords[0] + distance, coords[1] } };
         }
 
-        protected int? getRandomDirection(int[] coords)
+        protected int? getRandomDirection(int[] coords, bool isItWalkable)
         {
-            int[][] neighbours = getNeighbours(coords);
+            int[][] neighbours;
+            if(isItWalkable)
+            {
+                neighbours = getNeighbours(coords, true);
+            }
+            else
+            {
+                neighbours = getNeighbours(coords, false);
+            }
             List<int> possibleDirections = new List<int>();
             for (int i = 0; i < neighbours.Length; i++)
             {
                 try
                 {
                     int[] neighbour = neighbours[i];
-                    if (!map[neighbour[0], neighbour[1]])
+                    if (map[neighbour[0], neighbour[1]] == isItWalkable)
                     {
                         possibleDirections.Add(i);
                     }
@@ -64,6 +73,5 @@ namespace Blind_Alley
             }
             return possibleDirections[rand.Next(possibleDirections.Count())];
         }
-
     }
 }

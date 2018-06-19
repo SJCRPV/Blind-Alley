@@ -80,6 +80,7 @@ namespace Blind_Alley
             txtV = FindViewById<TextView>(Resource.Id.textView1);
             txtV.Text = map.getMapStr();
             Console.WriteLine(txtV.Text);
+            map.moveMonster();
         }
     }
 }

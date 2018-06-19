@@ -38,7 +38,7 @@ namespace Blind_Alley
 
         private bool itHasVisitedNeighbours(int[] coords)
         {
-            int[][] neighbours = getNeighbours(coords);
+            int[][] neighbours = getNeighbours(coords, false);
             for (int i = 0; i < neighbours.Length; i++)
             {
                 try
@@ -87,7 +87,7 @@ namespace Blind_Alley
         {
             int hunXCoord = hunterCoords[0];
             int hunYCoord = hunterCoords[1];
-            int? direction = getRandomDirection(hunterCoords);
+            int? direction = getRandomDirection(hunterCoords, false);
             if(direction == null)
             {
                 hunt();
