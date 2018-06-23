@@ -57,11 +57,13 @@
     <Reference Include="Mono.Android" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AStar.cs" />
     <Compile Include="Map.cs" />
     <Compile Include="MapHandler.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="MapGen.cs" />
     <Compile Include="Monster.cs" />
+    <Compile Include="Node.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

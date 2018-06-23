@@ -54,8 +54,6 @@ namespace Blind_Alley
             return mapStr;
         }
 
-        
-
         public void moveMonster()
         {
             TimeSpan startTime = TimeSpan.Zero;
@@ -126,6 +124,7 @@ namespace Blind_Alley
             mapWidth = nMapWidth;
             mapHeight = nMapHeight;
             mapGen = new MapGen();
+            monster = new Monster();
             minDistanceToPlayer = (nMapWidth / 2) + (nMapHeight / 2);
             map = mapGen.generateMap();
             placeRelevantPieces();

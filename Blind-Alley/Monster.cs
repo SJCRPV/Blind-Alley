@@ -14,6 +14,7 @@ namespace Blind_Alley
 {
     class Monster
     {
+        private AStar aStar;
         private int[] monsterCoords;
         private int numOfPlayerTrackingTicks;
 

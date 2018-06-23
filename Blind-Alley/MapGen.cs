@@ -151,10 +151,24 @@ namespace Blind_Alley
             return map;
         }
 
+        private void initializeNodeMap()
+        {
+            for(int i = 0; i < mapWidth; i++)
+            {
+                for(int j = 0; j < mapHeight; i++)
+                {
+                    int[] coords = new int[] { i, j };
+                    nodeMap.Add(new Node(coords));
+                }
+            }
+        }
+
         public MapGen()
         {
             rand = new Random();
             map = new bool[mapWidth, mapHeight];
+            nodeMap = new List<Node>();
+            initializeNodeMap();
             hunterCoords = getRandomCoord();
         }
     }

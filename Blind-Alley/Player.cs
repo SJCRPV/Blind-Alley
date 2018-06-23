@@ -52,7 +52,7 @@ namespace Blind_Alley
                         {
                             stepCounter++;
                             testCoords[1]--;
-                        } while (Map.getAt(testCoords));
+                        } while (Map.getValAt(testCoords));
 
                         if(direction == i)
                         {
@@ -73,7 +73,7 @@ namespace Blind_Alley
                         {
                             stepCounter++;
                             testCoords[0]--;
-                        } while (Map.getAt(testCoords));
+                        } while (Map.getValAt(testCoords));
 
                         if (direction == i)
                         {
@@ -94,7 +94,7 @@ namespace Blind_Alley
                         {
                             stepCounter++;
                             testCoords[1]++;
-                        } while (Map.getAt(testCoords));
+                        } while (Map.getValAt(testCoords));
 
                         if (direction == i)
                         {
@@ -115,7 +115,7 @@ namespace Blind_Alley
                         {
                             stepCounter++;
                             testCoords[0]++;
-                        } while (Map.getAt(testCoords));
+                        } while (Map.getValAt(testCoords));
 
                         if (direction == i)
                         {
@@ -186,7 +186,7 @@ namespace Blind_Alley
             if((direction == Directions.NORTH && forward) || (direction == Directions.SOUTH && !forward))
             {
                 potentialPlayerCoords[1]--;
-                if(Map.getAt(potentialPlayerCoords))
+                if(Map.getValAt(potentialPlayerCoords))
                 {
                     playerCoords[1]--;
                 }
@@ -199,7 +199,7 @@ namespace Blind_Alley
             else if((direction == Directions.SOUTH && forward) || (direction == Directions.NORTH && !forward))
             {
                 potentialPlayerCoords[1]++;
-                if(Map.getAt(potentialPlayerCoords))
+                if(Map.getValAt(potentialPlayerCoords))
                 {
                     playerCoords[1]++;
                 }
@@ -212,7 +212,7 @@ namespace Blind_Alley
             else if((direction == Directions.WEST && forward) || (direction == Directions.EAST && !forward))
             {
                 potentialPlayerCoords[0]--;
-                if(Map.getAt(potentialPlayerCoords))
+                if(Map.getValAt(potentialPlayerCoords))
                 {
                     playerCoords[0]--;
                 }
@@ -225,7 +225,7 @@ namespace Blind_Alley
             else if((direction == Directions.EAST && forward) || (direction == Directions.WEST && !forward))
             {
                 potentialPlayerCoords[0]++;
-                if(Map.getAt(potentialPlayerCoords))
+                if(Map.getValAt(potentialPlayerCoords))
                 {
                     playerCoords[0]++;
                 }

@@ -16,10 +16,11 @@ namespace Blind_Alley
     {
         protected static Random rand;
         protected static bool[,] map;
+        protected static List<Node> nodeMap;
         protected static int mapHeight;
         protected static int mapWidth;
 
-        public static bool getAt(int[] coords)
+        public static bool getValAt(int[] coords)
         {
             try
             {
@@ -29,6 +30,12 @@ namespace Blind_Alley
             {
                 return false;
             }
+        }
+        
+        public static Node getNodeAt(int[] coords)
+        {
+            //Number of rows - 1 * the width of each, plus the remainder 
+            return nodeMap[(coords[1] - 1) * mapWidth + coords[0]];
         }
 
         public static int[] getRandomCoord()
