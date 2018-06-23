@@ -14,7 +14,7 @@ namespace Blind_Alley
 {
     abstract class Map
     {
-        protected Random rand;
+        protected static Random rand;
         protected static bool[,] map;
         protected static int mapHeight;
         protected static int mapWidth;
@@ -31,18 +31,18 @@ namespace Blind_Alley
             }
         }
 
-        public int[] getRandomCoord()
+        public static int[] getRandomCoord()
         {
             return new int[] { rand.Next(mapWidth), rand.Next(mapHeight) };
         }
 
-        protected int[][] getNeighbours(int[] coords, bool wantClosest)
+        protected static int[][] getNeighbours(int[] coords, bool wantClosest)
         {
             int distance = wantClosest ? 1 : 2;
             return new int[][] { new int[] { coords[0], coords[1] - distance }, new int[] { coords[0] - distance, coords[1] }, new int[] { coords[0], coords[1] + distance }, new int[] { coords[0] + distance, coords[1] } };
         }
 
-        protected int? getRandomDirection(int[] coords, bool isItWalkable)
+        public static int? getRandomDirection(int[] coords, bool isItWalkable)
         {
             int[][] neighbours;
             if(isItWalkable)

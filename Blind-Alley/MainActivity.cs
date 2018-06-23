@@ -17,6 +17,7 @@ namespace Blind_Alley
         Button interactBtn;
         Player player;
         MapHandler map;
+        TextView areaDescription;
         TextView txtV;
 
         private void setListeners()
@@ -36,7 +37,7 @@ namespace Blind_Alley
             interactBtn.Click += (sender, e) =>
             {
                  Console.WriteLine("Wut?");
-                player.interact();
+                areaDescription.Text = player.interact();
             };
 
             rightBtn.Click += (sender, e) =>
@@ -62,24 +63,26 @@ namespace Blind_Alley
             base.OnCreate(savedInstanceState);
 
             // Set our view from the "main" layout resource
-            //SetContentView(Resource.Layout.Main);
-            //mainView = Window.DecorView;
-            //forwardBtn = mainView.FindViewById<Button>(Resource.Id.buttonForward);
-            //leftBtn = mainView.FindViewById<Button>(Resource.Id.buttonLeft);
-            //rightBtn = mainView.FindViewById<Button>(Resource.Id.buttonRight);
-            //interactBtn = mainView.FindViewById<Button>(Resource.Id.buttonInteract);
-            //backwardBtn = mainView.FindViewById<Button>(Resource.Id.buttonBackward);
+            SetContentView(Resource.Layout.Main);
+            mainView = Window.DecorView;
+            forwardBtn = mainView.FindViewById<Button>(Resource.Id.buttonForward);
+            leftBtn = mainView.FindViewById<Button>(Resource.Id.buttonLeft);
+            rightBtn = mainView.FindViewById<Button>(Resource.Id.buttonRight);
+            interactBtn = mainView.FindViewById<Button>(Resource.Id.buttonInteract);
+            backwardBtn = mainView.FindViewById<Button>(Resource.Id.buttonBackward);
+            areaDescription = mainView.FindViewById<TextView>(Resource.Id.areaDescription);
+
             player = new Player(0, 0);
 
-            //setListeners();
-            //generateMap();
+            setListeners();
+            generateMap();
 
             // Testing map generation
-            SetContentView(Resource.Layout.MapDebugging);
-            MapHandler map = new MapHandler(25, 25);
-            txtV = FindViewById<TextView>(Resource.Id.textView1);
-            txtV.Text = map.getMapStr();
-            Console.WriteLine(txtV.Text);
+            //SetContentView(Resource.Layout.MapDebugging);
+            //MapHandler map = new MapHandler(25, 25);
+            //txtV = FindViewById<TextView>(Resource.Id.textView1);
+            //txtV.Text = map.getMapStr();
+            //Console.WriteLine(txtV.Text);
             map.moveMonster();
         }
     }

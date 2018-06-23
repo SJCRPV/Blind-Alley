@@ -17,8 +17,8 @@ namespace Blind_Alley
         static float minDistanceToPlayer;
         static string mapStr;
         MapGen mapGen;
+        Monster monster;
         int[] objectiveCoords;
-        int[] monsterCoords;
 
         private void printMap()
         {
@@ -27,7 +27,7 @@ namespace Blind_Alley
             {
                 for (int j = 0; j < mapWidth; j++)
                 {
-                    if(i == monsterCoords[0] && j == monsterCoords[1])
+                    if(i == monster.MonsterCoords[0] && j == monster.MonsterCoords[1])
                     {
                         mapStr += 'M';
                     }
@@ -54,42 +54,7 @@ namespace Blind_Alley
             return mapStr;
         }
 
-        private void walk()
-        {
-            int? direction = getRandomDirection(monsterCoords, true);
-
-            switch (direction)
-            {
-                // NORTH
-                case 0:
-                    Console.WriteLine("Moving North");
-                    monsterCoords[1] -= 1;
-                    break;
-
-                // WEST
-                case 1:
-                    Console.WriteLine("Moving West");
-                    monsterCoords[0] -= 1;
-                    break;
-
-                // SOUTH
-                case 2:
-                    Console.WriteLine("Moving South");
-                    monsterCoords[1] += 1;
-                    break;
-
-                // EAST
-                case 3:
-                    Console.WriteLine("Moving East");
-                    monsterCoords[0] += 1;
-                    break;
-
-                // ERROR
-                default:
-                    Console.WriteLine("ERROR: I got the value " + direction + " and I don't know what to do with it.");
-                    break;
-            }
-        }
+        
 
         public void moveMonster()
         {
@@ -98,8 +63,8 @@ namespace Blind_Alley
 
             Timer timer = new Timer((e) =>
             {
-                walk();
-                Console.WriteLine("X: " + monsterCoords[0] + " Y: " + monsterCoords[1]);
+                monster.walk();
+                Console.WriteLine("X: " + monster.MonsterCoords[0] + " Y: " + monster.MonsterCoords[1]);
             }, null, startTime, delayBetweenMovement);
         }
 
@@ -147,12 +112,12 @@ namespace Blind_Alley
 
         public void placeRelevantPieces()
         {
-            objectiveCoords = mapGen.getRandomCoord();
+            objectiveCoords = getRandomCoord();
             while (!farEnoughFromPlayer(objectiveCoords))
             {
-                objectiveCoords = mapGen.getRandomCoord();
+                objectiveCoords = getRandomCoord();
             }
-            monsterCoords = placeNearObjective();
+            monster.MonsterCoords = placeNearObjective();
         }
 
         public MapHandler(int nMapWidth, int nMapHeight)

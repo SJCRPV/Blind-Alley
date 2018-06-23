@@ -3,60 +3,68 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
-  <TableLayout
-      android:layout_width="fill_parent"
-      android:layout_height="fill_parent"
-      android:stretchColumns="*">
-    <TableRow
-        android:layout_weight="1"
-        android:gravity="center">
-      <Space
-          android:layout_column="0"
-          android:id="@+id/space1" />
-      <Button
-          android:layout_width="fill_parent"
-          android:layout_height="fill_parent"
-          android:layout_column="1"
-          android:id="@+id/buttonForward"
-          android:text="Foward" />
-      <Space
-          android:layout_column="2"
-          android:id="@+id/space2" />
-    </TableRow>
-    <TableRow
-        android:layout_weight="1"
-        android:gravity="center">
-      <Button
-          android:text="Left"
-          android:layout_width="fill_parent"
-          android:layout_height="fill_parent"
-          android:id="@+id/buttonLeft" />
-      <Button
-          android:text="Interact"
-          android:layout_width="fill_parent"
-          android:layout_height="fill_parent"
-          android:id="@+id/buttonInteract" />
-      <Button
-          android:text="Right"
-          android:layout_width="fill_parent"
-          android:layout_height="fill_parent"
-          android:id="@+id/buttonRight" />
-    </TableRow>
-    <TableRow
-        android:layout_weight="1"
-        android:gravity="center">
-      <Space
-          android:layout_column="0"
-          android:id="@+id/space3" />
-      <Button
-          android:text="Backward"
-          android:layout_width="fill_parent"
-          android:layout_height="fill_parent"
-          android:layout_column="1"
-          android:id="@+id/buttonBackward" />
-      <Space
-          android:layout_column="2"
-          android:id="@+id/space4" />
-    </TableRow>
-  </TableLayout>
+    <TableLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:stretchColumns="*">
+        <TableRow>
+            <TextView
+                android:text="You see nothing"
+                android:layout_column="0"
+                android:layout_span="3"
+                android:id="@+id/areaDescription"
+                android:textAlignment="center" />
+        </TableRow>
+        <TableRow
+            android:layout_weight="1"
+            android:gravity="center">
+            <Space
+                android:layout_column="0"
+                android:id="@+id/space1" />
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_column="1"
+                android:id="@+id/buttonForward"
+                android:text="Foward" />
+            <Space
+                android:layout_column="2"
+                android:id="@+id/space2" />
+        </TableRow>
+        <TableRow
+            android:layout_weight="1"
+            android:gravity="center">
+            <Button
+                android:text="Left"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:id="@+id/buttonLeft" />
+            <Button
+                android:text="Interact"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:id="@+id/buttonInteract" />
+            <Button
+                android:text="Right"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:id="@+id/buttonRight" />
+        </TableRow>
+        <TableRow
+            android:layout_weight="1"
+            android:gravity="center">
+            <Space
+                android:layout_column="0"
+                android:id="@+id/space3" />
+            <Button
+                android:text="Backward"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_column="1"
+                android:id="@+id/buttonBackward" />
+            <Space
+                android:layout_column="2"
+                android:id="@+id/space4" />
+        </TableRow>
+    </TableLayout>
 </LinearLayout>
