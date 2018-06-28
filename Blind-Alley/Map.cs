@@ -19,6 +19,12 @@ namespace Blind_Alley
         protected static List<Node> nodeMap;
         protected static int mapHeight;
         protected static int mapWidth;
+        protected static int[] objectiveCoords;
+
+        public static int[] ObjectiveCoords
+        {
+            get => objectiveCoords;
+        }
 
         public static bool getValAt(int[] coords)
         {
@@ -34,7 +40,7 @@ namespace Blind_Alley
         
         public static Node getNodeAt(int[] coords)
         {
-            //Number of rows - 1 * the width of each, plus the remainder 
+            //(Number of rows - 1) * (the width of each) + the remainder 
             return nodeMap[(coords[1] - 1) * mapWidth + coords[0]];
         }
 

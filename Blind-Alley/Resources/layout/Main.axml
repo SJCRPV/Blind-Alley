@@ -9,7 +9,7 @@
         android:stretchColumns="*">
         <TableRow>
             <TextView
-                android:text="You see nothing"
+                android:text="You see nothing, but you can sense a magical orb within. It can cure you. Go forth and find it!"
                 android:layout_column="0"
                 android:layout_span="3"
                 android:id="@+id/areaDescription"

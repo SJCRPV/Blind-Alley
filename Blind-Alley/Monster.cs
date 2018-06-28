@@ -14,11 +14,11 @@ namespace Blind_Alley
 {
     class Monster
     {
+        private static int[] monsterCoords;
         private AStar aStar;
-        private int[] monsterCoords;
         private int numOfPlayerTrackingTicks;
 
-        public int[] MonsterCoords { get => monsterCoords; set => monsterCoords = value; }
+        public static int[] MonsterCoords { get => monsterCoords; set => monsterCoords = value; }
 
         public int NumOfPlayerTrackingTicks { get => numOfPlayerTrackingTicks; set => numOfPlayerTrackingTicks = value; }
 

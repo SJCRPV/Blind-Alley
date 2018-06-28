@@ -18,7 +18,6 @@ namespace Blind_Alley
         static string mapStr;
         MapGen mapGen;
         Monster monster;
-        int[] objectiveCoords;
 
         private void printMap()
         {
@@ -27,7 +26,7 @@ namespace Blind_Alley
             {
                 for (int j = 0; j < mapWidth; j++)
                 {
-                    if(i == monster.MonsterCoords[0] && j == monster.MonsterCoords[1])
+                    if(i == Monster.MonsterCoords[0] && j == Monster.MonsterCoords[1])
                     {
                         mapStr += 'M';
                     }
@@ -62,7 +61,7 @@ namespace Blind_Alley
             Timer timer = new Timer((e) =>
             {
                 monster.walk();
-                Console.WriteLine("X: " + monster.MonsterCoords[0] + " Y: " + monster.MonsterCoords[1]);
+                Console.WriteLine("X: " + Monster.MonsterCoords[0] + " Y: " + Monster.MonsterCoords[1]);
             }, null, startTime, delayBetweenMovement);
         }
 
@@ -115,7 +114,7 @@ namespace Blind_Alley
             {
                 objectiveCoords = getRandomCoord();
             }
-            monster.MonsterCoords = placeNearObjective();
+            Monster.MonsterCoords = placeNearObjective();
         }
 
         public MapHandler(int nMapWidth, int nMapHeight)

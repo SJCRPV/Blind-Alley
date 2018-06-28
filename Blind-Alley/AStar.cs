@@ -16,24 +16,17 @@ namespace Blind_Alley
     {
         // Taking from here https://www.codeproject.com/Articles/1221034/Pathfinding-Algorithms-in-Csharp
 
+        private void buildShortestPath(List<Node> list, Node node)
+        {
+
+        }
+
         //private void BuildShortestPath(List<Node> list, Node node)
         //{
         //    if (node.NearestToStart == null)
         //        return;
         //    list.Add(node.NearestToStart);
         //    BuildShortestPath(list, node.NearestToStart);
-        //}
-
-        //public List<Node> GetShortestPathAstar()
-        //{
-        //    foreach (var node in Map.Nodes)
-        //        node.StraightLineDistanceToEnd = node.StraightLineDistanceTo(End);
-        //    AstarSearch();
-        //    var shortestPath = new List<Node>();
-        //    shortestPath.Add(End);
-        //    BuildShortestPath(shortestPath, End);
-        //    shortestPath.Reverse();
-        //    return shortestPath;
         //}
 
         private void search()
@@ -47,9 +40,22 @@ namespace Blind_Alley
             {
                 processQueue = processQueue.OrderBy(n => n.MinCostToStart + n.calcDistToEnd()).ToList();
                 Node node = processQueue.First();
-                foreach( int[] connection in node.getWalkableNeighbours())
+                foreach (int[] connection in node.getWalkableNeighbours())
                 {
-                    Node childNode = 
+                    Node connectionNode = getNodeAt(connection);
+                    if(connectionNode.Visited)
+                    {
+                        continue;
+                    }
+                    if(connectionNode.MinCostToStart == null || node.MinCostToStart + connectionNode.Cost < connectionNode.MinCostToStart)
+                    {
+                        connectionNode.MinCostToStart = node.MinCostToStart + connectionNode.Cost;
+                        //connectionNode.NearestToStart = node;
+                        if(!processQueue.Contains(connectionNode))
+                        {
+                            processQueue.Add(connectionNode);
+                        }
+                    }
                 }
             } while (processQueue.Any());
         }
@@ -83,5 +89,20 @@ namespace Blind_Alley
         //            return;
         //    } while (prioQueue.Any());
         //}
+
+        public List<Node> getShortestPath()
+        {
+            foreach( Node node in nodeMap)
+            {
+                node.calcDistToEnd();
+            }
+            search();
+            List<Node> shortestPath = new List<Node>();
+            Node endNode = getNodeAt(Player.PlayerCoords);
+            shortestPath.Add(endNode);
+            buildShortestPath(shortestPath, endNode);
+            shortestPath.Reverse();
+            return shortestPath;
+        }
     }
 }

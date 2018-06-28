@@ -16,11 +16,29 @@ namespace Blind_Alley
     {
         private int[] coords;
         private int[][] connections;
-        private int minCostToStart;
+        private int? minCostToStart;
         private double distToEnd;
+        private int cost;
+        private bool visited;
 
-        public int[] Coords { get => coords; }
-        public int MinCostToStart { get => minCostToStart; set => minCostToStart = value; }
+        public int[] Coords
+        {
+            get => coords;
+        }
+        public int? MinCostToStart
+        {
+            get => minCostToStart;
+            set => minCostToStart = value;
+        }
+        public int Cost
+        {
+            get => cost;
+        }
+        public bool Visited
+        {
+            get => visited;
+            set => visited = value;
+        }
 
         public bool getMapVal()
         {
@@ -64,6 +82,8 @@ namespace Blind_Alley
         public Node(int[] nCoords)
         {
             coords = (int[])nCoords.Clone();
+            cost = getMapVal() ? 1 : (mapWidth * mapHeight);
+            visited = false;
         }
     }
 }

@@ -155,7 +155,7 @@ namespace Blind_Alley
         {
             for(int i = 0; i < mapWidth; i++)
             {
-                for(int j = 0; j < mapHeight; i++)
+                for(int j = 0; j < mapHeight; j++)
                 {
                     int[] coords = new int[] { i, j };
                     nodeMap.Add(new Node(coords));
